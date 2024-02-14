@@ -1,0 +1,8 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+demo-elastic,com.example.demoelastic.restclient,ElasticRestService,11,181,0,2,2,46,0,17,0,16
+demo-elastic,com.example.demoelastic.restclient,ElasticClient,0,139,0,4,0,32,0,15,0,13
+demo-elastic,com.example.demoelastic.utils,ElasticOperations,0,135,0,0,0,33,0,2,0,2
+demo-elastic,com.example.demoelastic.model,Product,0,3,0,0,0,1,0,1,0,1
+demo-elastic,com.example.demoelastic.service,CSVReaderRoute,0,197,0,0,0,51,0,5,0,5
+demo-elastic,com.example.demoelastic.service,MyRestRoute,29,112,0,0,7,38,1,2,1,2
+demo-elastic,com.example.demoelastic,DemoElasticApplication,5,3,0,0,2,1,1,1,1,1

@@ -1,0 +1,3 @@
+id,productName,colour,price
+1,shoes,black,5000
+2,belt,blacl,1000

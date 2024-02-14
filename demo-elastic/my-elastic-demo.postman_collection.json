@@ -1,0 +1,257 @@
+{
+	"info": {
+		"_postman_id": "01c51d7a-9c8d-4ce2-a1aa-b2a969913b60",
+		"name": "my-elastic-demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27766546"
+	},
+	"item": [
+		{
+			"name": "elasticClient",
+			"item": [
+				{
+					"name": "getProduct",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/restClient/getData?id=10005",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"restClient",
+								"getData"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "10005"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add One Product Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":\"10006\",\n    \"productName\":\"milk\",\n    \"colour\":\"milky\",\n    \"price\":\"45\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/restClient/addProduct",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"restClient",
+								"addProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add One Product Copy 2",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":\"10005\",\n    \"productName\":\"milk\",\n    \"colour\":\"milky\",\n    \"price\":\"45\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/restClient/updateProduct?id=10005",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"restClient",
+								"updateProduct"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "10005"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/restClient/deleteById?id=10006",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"restClient",
+								"deleteById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "10006"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/product/getAll",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"product",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/product/getByid/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"product",
+						"getByid",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add One Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":\"5\",\n    \"productName\":\"mango\",\n    \"colour\":\"green\",\n    \"price\":\"45\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/product/addOne/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"product",
+						"addOne",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add Doc",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "I bought i shoes that seems very interesting.",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/product/addDoc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"product",
+						"addDoc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add Doc Copy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/product/deleteByid/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"product",
+						"deleteByid",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MyRestRoute.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">demo-elastic</a> &gt; <a href="index.source.html" class="el_package">com.example.demoelastic.service</a> &gt; <span class="el_source">MyRestRoute.java</span></div><h1>MyRestRoute.java</h1><pre class="source lang-java linenums">package com.example.demoelastic.service;
+
+import java.util.HashMap;
+
+import org.apache.camel.Exchange;
+import org.apache.camel.LoggingLevel;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.http.base.HttpOperationFailedException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import com.example.demoelastic.model.Product;
+
+@Component
+<span class="fc" id="L15">public class MyRestRoute extends RouteBuilder {</span>
+        @Value(&quot;${authenticationKey}&quot;)
+        String authenticationKey;
+        
+<span class="fc" id="L19">        String loggingRoute=&quot;direct:loggingCurrentheaderandbody&quot;;</span>
+        @Override
+        public void configure() throws Exception {
+
+<span class="fc" id="L23">                rest(&quot;/product&quot;)</span>
+<span class="fc" id="L24">                                .get(&quot;getAll&quot;)</span>
+<span class="fc" id="L25">                                .to(&quot;direct:getAll&quot;)</span>
+<span class="fc" id="L26">                                .get(&quot;getByid/{id}&quot;)</span>
+<span class="fc" id="L27">                                .to(&quot;direct:getById&quot;)</span>
+
+<span class="fc" id="L29">                                .post(&quot;addOne/{id}&quot;)</span>
+<span class="fc" id="L30">                                .consumes(&quot;application/json&quot;).type(Product.class)</span>
+<span class="fc" id="L31">                                .to(&quot;direct:InsertData&quot;)</span>
+<span class="fc" id="L32">                                .post(&quot;addDoc&quot;)</span>
+<span class="fc" id="L33">                                .consumes(&quot;text/plain&quot;)</span>
+<span class="fc" id="L34">                                .to(&quot;direct:addDocument&quot;)</span>
+
+<span class="fc" id="L36">                                .put(&quot;update/{id}&quot;)</span>
+<span class="fc" id="L37">                                .type(Product.class)</span>
+<span class="fc" id="L38">                                .to(&quot;direct:UpdateData&quot;)</span>
+
+<span class="fc" id="L40">                                .delete(&quot;deleteByid/{id}&quot;)</span>
+<span class="fc" id="L41">                                .produces(&quot;application/json&quot;)</span>
+<span class="fc" id="L42">                                .to(&quot;direct:deleteById&quot;);</span>
+
+<span class="fc" id="L44">                from(&quot;direct:deleteById&quot;)</span>
+<span class="fc" id="L45">                                .log(LoggingLevel.INFO,&quot;Request to delete ${header.id}.&quot;)</span>
+<span class="fc" id="L46">                                .doTry()</span>
+<span class="fc" id="L47">                                .setHeader(Exchange.HTTP_METHOD, constant(&quot;DELETE&quot;))</span>
+<span class="fc" id="L48">                                .setHeader(Exchange.AUTHENTICATION, simple(authenticationKey))</span>
+<span class="fc" id="L49">                                .toD(&quot;{{camel.elasticindice}}/_doc/${header.id}?bridgeEndpoint=true&quot;)</span>
+<span class="fc" id="L50">                                .log(LoggingLevel.INFO,&quot;Deletion Completed.&quot;)</span>
+<span class="fc" id="L51">                                .doCatch(HttpOperationFailedException.class)</span>
+<span class="fc" id="L52">                                .setHeader(Exchange.HTTP_RESPONSE_CODE, simple(&quot;404&quot;))</span>
+<span class="fc" id="L53">                                .setBody().simple(&quot;{\&quot;errorMessage\&quot;:\&quot;No Such Object\&quot;}&quot;)</span>
+<span class="fc" id="L54">                                .log(LoggingLevel.ERROR,&quot;${exception.message}&quot;)</span>
+<span class="fc" id="L55">                                .to(loggingRoute);</span>
+
+<span class="fc" id="L57">                from(&quot;direct:addDocument&quot;)</span>
+<span class="fc" id="L58">                                .log(LoggingLevel.INFO,&quot;Request to a new Document.&quot;)</span>
+<span class="fc" id="L59">                                .process(e -&gt; {</span>
+<span class="nc" id="L60">                                        String document = e.getIn().getBody(String.class);</span>
+<span class="nc" id="L61">                                        HashMap&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L62">                                        HashMap&lt;String, String&gt; innermap = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L63">                                        innermap.put(&quot;review&quot;, document);</span>
+<span class="nc" id="L64">                                        map.put(&quot;doc&quot;, innermap);</span>
+<span class="nc" id="L65">                                        e.getIn().setBody(map);</span>
+<span class="nc" id="L66">                                })</span>
+<span class="fc" id="L67">                                .marshal().json()</span>
+<span class="fc" id="L68">                                .to(loggingRoute)</span>
+<span class="fc" id="L69">                                .to(&quot;direct:InsertData&quot;);</span>
+
+<span class="fc" id="L71">        }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
