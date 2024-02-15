@@ -51,14 +51,6 @@ public class MyRestRouteTest {
 		mockAddDocument.reset();
 
 	}
-
-	// @Test
-	void calladdData() throws Exception {
-        getProduct();
-		mockAddDocument.expectedMessageCount(0);
-		producerTemplate.sendBodyAndHeader("direct:addDocument","This is my new doc",null,null);
-		mockAddDocument.assertIsSatisfied();
-	}
     @Test
     void callDocumentAdd(){
 //todo

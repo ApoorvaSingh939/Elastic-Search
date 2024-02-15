@@ -1,6 +1,5 @@
 package com.example.demoelastic.service;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 
@@ -83,34 +82,4 @@ public class CSVReaderRouteTest {
 
 	}
 
-	// @Test
-	void rejectFileMovedToFailDirectory() throws Exception {
-
-		File file = new File("testFolder/input/testTwo.csv");
-
-		mockRejectFile.expectedMessageCount(0);
-		producerTemplate.sendBodyAndHeader("direct:rejectFile", file, Exchange.FILE_NAME, file.getName());
-		mockRejectFile.assertIsSatisfied();
-
-	}
-	// @Test
-	void successFileMovedToSuccessDirectory() throws Exception {
-
-		File file = new File("testFolder/input/test.csv");
-		mockRejectFile.expectedMessageCount(0);
-		producerTemplate.sendBodyAndHeader("direct:rejectFile", file, Exchange.FILE_NAME, file.getName());
-		mockRejectFile.assertIsSatisfied();
-
-	}
-	// @Test
-	void verifyifTheFileMovedOrNot() throws Exception{
-		File expectedFile=new File("testFolder/input/testTwo.csv");
-		assertTrue(expectedFile.exists(),"true");
-
-	}
-	// @Test
-	void assertFileMovedTo(String expectedPath) {
-		File expectedFile = new File(expectedPath);
-		assertTrue(expectedFile.exists(), "File not found at expected path: " + expectedPath);
-	}
 }

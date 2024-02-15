@@ -65,7 +65,7 @@ public class ElasticRestService {
             updateResponse = esClient.update(u -> u
                     .index(index1)
                     .id(productId)
-                    .upsert(product),
+                    .doc(product),
                     Product.class);
         } catch (ElasticsearchException | IOException e) {
             return "A ElsaticserachException Occures :: " + e.getLocalizedMessage();
@@ -89,7 +89,7 @@ public class ElasticRestService {
                                                 .value(productId))))));
         log.info("Delete Doc Request for id :{} String : {}", productId, deleteProduct.toString());
         if (deleteProduct.deleted() < 1) {
-            return ("Failed to delete comment");
+            return ("Failed to delete product");
         }
         return "deleted";
     }

@@ -1,0 +1,2 @@
+id,productName,colour,price
+6,Sports Women shoes,Black,7000
